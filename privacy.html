@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Política de Privacidad — WhatsView</title>
+  <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --green: #25D366;
+      --bg: #0a0f0d;
+      --bg2: #111a15;
+      --text: #e8f0e9;
+      --text-muted: #7a9982;
+      --border: rgba(37,211,102,0.12);
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+    }
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 2rem; height: 60px;
+      background: rgba(10,15,13,0.9);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-family: 'Syne', sans-serif; font-weight: 800;
+      font-size: 1.25rem; color: var(--green); text-decoration: none;
+    }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { color: var(--text-muted); text-decoration: none; font-size: 0.875rem; font-weight: 500; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--text); }
+    .nav-back {
+      font-size: 0.875rem; color: var(--text-muted);
+      text-decoration: none; transition: color 0.2s;
+    }
+    .nav-back:hover { color: var(--text); }
+
+    .page-wrap {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 4rem 2rem 6rem;
+    }
+
+    .page-label {
+      font-size: 0.75rem; font-weight: 500;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--green); margin-bottom: 1rem;
+    }
+    .page-title {
+      font-family: 'Syne', sans-serif; font-weight: 800;
+      font-size: 2.25rem; letter-spacing: -0.03em;
+      line-height: 1.1; margin-bottom: 0.75rem;
+    }
+    .page-date {
+      font-size: 0.875rem; color: var(--text-muted);
+      margin-bottom: 3rem; font-weight: 300;
+    }
+
+    .prose h2 {
+      font-family: 'Syne', sans-serif; font-weight: 700;
+      font-size: 1.25rem; letter-spacing: -0.02em;
+      color: var(--text); margin: 2.5rem 0 0.75rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .prose h3 {
+      font-weight: 500; font-size: 1rem;
+      color: var(--text); margin: 1.5rem 0 0.5rem;
+    }
+    .prose h4 {
+      font-weight: 500; font-size: 0.9375rem;
+      color: var(--text-muted); margin: 1.25rem 0 0.4rem;
+    }
+    .prose p {
+      font-size: 0.9375rem; color: var(--text-muted);
+      font-weight: 300; margin-bottom: 1rem;
+    }
+    .prose ul {
+      margin: 0.75rem 0 1rem 1.25rem;
+    }
+    .prose li {
+      font-size: 0.9375rem; color: var(--text-muted);
+      font-weight: 300; margin-bottom: 0.5rem;
+    }
+    .prose strong {
+      font-weight: 500; color: var(--text);
+    }
+    .prose a {
+      color: var(--green); text-decoration: none;
+    }
+    .prose a:hover { text-decoration: underline; }
+
+    .highlight-box {
+      background: rgba(37,211,102,0.05);
+      border: 1px solid rgba(37,211,102,0.15);
+      border-left: 3px solid var(--green);
+      border-radius: 0 8px 8px 0;
+      padding: 1rem 1.25rem;
+      margin: 1.5rem 0;
+    }
+    .highlight-box p {
+      margin: 0;
+      font-size: 0.9375rem;
+      color: var(--text);
+    }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 1.5rem 2rem;
+      text-align: center;
+      font-size: 0.8125rem;
+      color: var(--text-muted);
+    }
+    footer a { color: var(--green); text-decoration: none; }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html"><img src="assets/logo.png" alt="WhatsView" style="height:32px;"/></a>
+  <a class="nav-logo" href="index.html">WhatsView</a>
+  <a class="nav-back" href="index.html">← Volver al inicio</a>
+</nav>
+
+<div class="page-wrap">
+  <p class="page-label">Legal</p>
+  <h1 class="page-title">Política de Privacidad</h1>
+  <p class="page-date">Última actualización: 10 de mayo de 2026</p>
+
+  <div class="highlight-box">
+    <p><strong>Resumen rápido:</strong> WhatsView no recopila, transmite ni almacena ningún dato personal tuyo. Todo el procesamiento ocurre localmente en tu dispositivo. No tienes cuenta, no hay servidores, no hay telemetría.</p>
+  </div>
+
+  <div class="prose">
+
+    <h2>1. Quiénes somos</h2>
+    <p>WhatsView es una aplicación desarrollada de forma independiente para Android que permite visualizar chats exportados de WhatsApp. La aplicación es operada por su desarrollador individual con domicilio en México.</p>
+    <p>Contacto: <a href="mailto:whatsview0@gmail.com">whatsview0@gmail.com</a></p>
+
+    <h2>2. Qué datos recopilamos</h2>
+    <p><strong>La respuesta corta: ninguno.</strong></p>
+    <p>WhatsView no recopila, procesa, transmite ni almacena datos personales de ningún tipo. La aplicación opera completamente sin conexión a internet. Específicamente:</p>
+    <ul>
+      <li>No recopilamos nombres, correos electrónicos, números de teléfono ni ningún otro identificador.</li>
+      <li>No accedemos al contenido de tus archivos ZIP ni de los chats que importas, más allá de mostrártelos en pantalla.</li>
+      <li>No enviamos ningún dato a servidores externos.</li>
+      <li>No usamos analíticas, rastreo, ni publicidad.</li>
+      <li>No requerimos que crees una cuenta.</li>
+    </ul>
+
+    <h2>3. Permisos que solicita la app</h2>
+    <p>WhatsView solicita los siguientes permisos de Android exclusivamente para su funcionamiento:</p>
+
+    <h3>Almacenamiento</h3>
+    <p><strong>READ_EXTERNAL_STORAGE / READ_MEDIA_*:</strong> Necesario para que puedas seleccionar el archivo <code>.zip</code> exportado desde tu almacenamiento. La app solo lee el archivo que tú seleccionas explícitamente; no escanea ni accede a ningún otro contenido de tu dispositivo sin tu conocimiento.</p>
+    <p><strong>MANAGE_EXTERNAL_STORAGE:</strong> Requerido en Android 11 y superior para poder leer archivos ubicados en carpetas protegidas, como la carpeta de medios de WhatsApp (<code>/Android/media/com.whatsapp/</code>). Solo se usa para la función de "buscar chats exportados" — nunca para acceder a contenido ajeno a esta función.</p>
+
+    <h4>Lo que NO hacemos con los permisos</h4>
+    <ul>
+      <li>No leemos archivos distintos al ZIP que tú seleccionas.</li>
+      <li>No enviamos ningún archivo a servicios externos.</li>
+      <li>No accedemos a contactos, cámara, micrófono, ubicación ni ningún otro sensor.</li>
+    </ul>
+
+    <h2>4. Datos de uso local</h2>
+    <p>Para recordar qué chats has importado entre sesiones, WhatsView guarda únicamente las <strong>rutas de archivo</strong> de los ZIPs importados en el almacenamiento interno privado de la app (<code>SharedPreferences</code>). Esta información:</p>
+    <ul>
+      <li>Nunca sale de tu dispositivo.</li>
+      <li>No contiene el contenido de los mensajes.</li>
+      <li>Se elimina automáticamente si desinstala la app o si borras los datos de la app desde los ajustes del sistema.</li>
+      <li>Puedes eliminarla manualmente haciendo long-press sobre un chat en la lista principal y seleccionando "Eliminar".</li>
+    </ul>
+
+    <h2>5. Privacidad de terceros</h2>
+    <p>WhatsView no integra SDKs de terceros, librerías de analíticas, redes publicitarias ni servicios de seguimiento. Las únicas dependencias de terceros son librerías de código abierto utilizadas para el funcionamiento de la app (como <code>archive</code> para descomprimir ZIPs), que no recopilan datos.</p>
+
+    <h2>6. Seguridad</h2>
+    <p>Dado que WhatsView no transmite ningún dato y opera completamente offline, los riesgos de seguridad asociados a transmisión de datos no aplican. Los archivos que importas permanecen en tu dispositivo y bajo tu control en todo momento.</p>
+    <p>Sin embargo, te recomendamos mantener tu dispositivo actualizado y protegido con un código de acceso, ya que los archivos ZIP importados pueden contener conversaciones privadas.</p>
+
+    <h2>7. Privacidad de menores</h2>
+    <p>WhatsView no está dirigida a menores de 16 años y no recopila datos de ningún usuario, incluidos menores. Si eres padre o tutor y tienes alguna preocupación, puedes contactarnos en <a href="mailto:whatsview0@gmail.com">whatsview0@gmail.com</a>.</p>
+
+    <h2>8. Tus derechos</h2>
+    <p>Dado que no recopilamos datos personales, no hay datos que solicitar, rectificar ni eliminar en nuestros sistemas. Para cualquier consulta puedes contactarnos directamente:</p>
+    <ul>
+      <li>Email: <a href="mailto:whatsview0@gmail.com">whatsview0@gmail.com</a></li>
+    </ul>
+
+    <h2>9. Cambios a esta política</h2>
+    <p>Si realizamos cambios materiales a esta política, actualizaremos la fecha de "última actualización" en esta página. Te recomendamos revisarla periódicamente. Los cambios entran en vigor desde su publicación.</p>
+
+    <h2>10. Ley aplicable</h2>
+    <p>Esta política se rige por las leyes de México, incluyendo la Ley Federal de Protección de Datos Personales en Posesión de los Particulares (LFPDPPP).</p>
+
+  </div>
+</div>
+
+<footer>
+  <p>© 2026 WhatsView · <a href="index.html">Inicio</a> · <a href="license.html">Licencia</a> · <a href="mailto:whatsview0@gmail.com">whatsview0@gmail.com</a></p>
+</footer>
+
+</body>
+</html>

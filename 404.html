@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Página no encontrada — WhatsView</title>
+  <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@800&family=DM+Sans:wght@300;400&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root { --green: #25D366; --bg: #0a0f0d; --text: #e8f0e9; --text-muted: #7a9982; }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg); color: var(--text);
+      min-height: 100vh; display: flex;
+      align-items: center; justify-content: center;
+      text-align: center; padding: 2rem;
+    }
+    .wrap { max-width: 400px; }
+    .code {
+      font-family: 'Syne', sans-serif; font-weight: 800;
+      font-size: 6rem; color: var(--green);
+      letter-spacing: -0.05em; line-height: 1;
+      margin-bottom: 1rem;
+    }
+    h1 {
+      font-family: 'Syne', sans-serif; font-weight: 800;
+      font-size: 1.5rem; margin-bottom: 0.75rem;
+    }
+    p { color: var(--text-muted); font-weight: 300; margin-bottom: 2rem; }
+    a {
+      display: inline-block;
+      background: var(--green); color: #0a0f0d;
+      font-weight: 500; padding: 0.75rem 1.75rem;
+      border-radius: 100px; text-decoration: none;
+      transition: opacity 0.2s;
+    }
+    a:hover { opacity: 0.85; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <p class="code">404</p>
+    <h1>Página no encontrada</h1>
+    <p>La página que buscas no existe o fue movida.</p>
+    <a href="/">Volver al inicio</a>
+  </div>
+</body>
+</html>

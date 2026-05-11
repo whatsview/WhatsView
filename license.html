@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Licencia — WhatsView</title>
+  <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --green: #25D366;
+      --bg: #0a0f0d;
+      --bg2: #111a15;
+      --text: #e8f0e9;
+      --text-muted: #7a9982;
+      --border: rgba(37,211,102,0.12);
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+    }
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 2rem; height: 60px;
+      background: rgba(10,15,13,0.9);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-family: 'Syne', sans-serif; font-weight: 800;
+      font-size: 1.25rem; color: var(--green); text-decoration: none;
+    }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { color: var(--text-muted); text-decoration: none; font-size: 0.875rem; font-weight: 500; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--text); }
+    .nav-back {
+      font-size: 0.875rem; color: var(--text-muted);
+      text-decoration: none; transition: color 0.2s;
+    }
+    .nav-back:hover { color: var(--text); }
+
+    .page-wrap {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 4rem 2rem 6rem;
+    }
+
+    .page-label {
+      font-size: 0.75rem; font-weight: 500;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--green); margin-bottom: 1rem;
+    }
+    .page-title {
+      font-family: 'Syne', sans-serif; font-weight: 800;
+      font-size: 2.25rem; letter-spacing: -0.03em;
+      line-height: 1.1; margin-bottom: 0.75rem;
+    }
+    .page-sub {
+      font-size: 0.9375rem; color: var(--text-muted);
+      margin-bottom: 3rem; font-weight: 300;
+    }
+
+    .license-box {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 2rem;
+      margin-bottom: 3rem;
+    }
+    .license-box pre {
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 0.8125rem;
+      color: var(--text-muted);
+      white-space: pre-wrap;
+      word-break: break-word;
+      line-height: 1.7;
+    }
+    .license-box strong {
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    .prose h2 {
+      font-family: 'Syne', sans-serif; font-weight: 700;
+      font-size: 1.25rem; letter-spacing: -0.02em;
+      color: var(--text); margin: 2.5rem 0 0.75rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .prose p {
+      font-size: 0.9375rem; color: var(--text-muted);
+      font-weight: 300; margin-bottom: 1rem;
+    }
+    .prose ul {
+      margin: 0.75rem 0 1rem 1.25rem;
+    }
+    .prose li {
+      font-size: 0.9375rem; color: var(--text-muted);
+      font-weight: 300; margin-bottom: 0.5rem;
+    }
+    .prose strong { font-weight: 500; color: var(--text); }
+    .prose a { color: var(--green); text-decoration: none; }
+    .prose a:hover { text-decoration: underline; }
+
+    .dep-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      margin-top: 1rem;
+    }
+    .dep-card {
+      background: var(--bg2);
+      padding: 1rem 1.25rem;
+    }
+    .dep-name {
+      font-weight: 500; font-size: 0.875rem;
+      color: var(--text); margin-bottom: 0.25rem;
+    }
+    .dep-license {
+      font-size: 0.75rem; color: var(--green);
+      background: rgba(37,211,102,0.08);
+      display: inline-block;
+      padding: 2px 8px; border-radius: 100px;
+      margin-bottom: 0.25rem;
+    }
+    .dep-desc {
+      font-size: 0.8125rem; color: var(--text-muted);
+      font-weight: 300;
+    }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 1.5rem 2rem;
+      text-align: center;
+      font-size: 0.8125rem;
+      color: var(--text-muted);
+    }
+    footer a { color: var(--green); text-decoration: none; }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html"><img src="assets/logo.png" alt="WhatsView" style="height:32px;"/></a>
+  <a class="nav-logo" href="index.html">WhatsView</a>
+  <a class="nav-back" href="index.html">← Volver al inicio</a>
+</nav>
+
+<div class="page-wrap">
+  <p class="page-label">Legal</p>
+  <h1 class="page-title">Licencia</h1>
+  <p class="page-sub">WhatsView se distribuye bajo la licencia MIT. Eres libre de usarla, modificarla y distribuirla.</p>
+
+  <div class="license-box">
+    <pre><strong>MIT License</strong>
+
+Copyright (c) 2026 WhatsView
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.</pre>
+  </div>
+
+  <div class="prose">
+
+    <h2>¿Qué significa esto?</h2>
+    <p>La licencia MIT es una de las licencias de software libre más permisivas. En términos simples:</p>
+    <ul>
+      <li><strong>Puedes usar</strong> WhatsView para cualquier propósito, personal o comercial.</li>
+      <li><strong>Puedes modificar</strong> el código fuente y adaptarlo a tus necesidades.</li>
+      <li><strong>Puedes distribuir</strong> copias del software original o modificado.</li>
+      <li><strong>Sin garantías:</strong> el software se proporciona tal cual, sin garantía de ningún tipo.</li>
+      <li><strong>Solo debes</strong> incluir el aviso de copyright y la licencia en cualquier distribución.</li>
+    </ul>
+
+    <h2>Dependencias de terceros</h2>
+    <p>WhatsView utiliza las siguientes librerías de código abierto, cada una con su propia licencia:</p>
+
+    <div class="dep-grid">
+      <div class="dep-card">
+        <p class="dep-name">archive</p>
+        <span class="dep-license">MIT</span>
+        <p class="dep-desc">Descompresión de archivos ZIP</p>
+      </div>
+      <div class="dep-card">
+        <p class="dep-name">file_picker</p>
+        <span class="dep-license">MIT</span>
+        <p class="dep-desc">Selección de archivos del dispositivo</p>
+      </div>
+      <div class="dep-card">
+        <p class="dep-name">photo_view</p>
+        <span class="dep-license">MIT</span>
+        <p class="dep-desc">Visor de imágenes a pantalla completa</p>
+      </div>
+      <div class="dep-card">
+        <p class="dep-name">permission_handler</p>
+        <span class="dep-license">MIT</span>
+        <p class="dep-desc">Gestión de permisos de Android</p>
+      </div>
+      <div class="dep-card">
+        <p class="dep-name">shared_preferences</p>
+        <span class="dep-license">BSD-3</span>
+        <p class="dep-desc">Persistencia de rutas importadas</p>
+      </div>
+      <div class="dep-card">
+        <p class="dep-name">just_audio</p>
+        <span class="dep-license">MIT</span>
+        <p class="dep-desc">Reproducción de audio</p>
+      </div>
+      <div class="dep-card">
+        <p class="dep-name">open_filex</p>
+        <span class="dep-license">MIT</span>
+        <p class="dep-desc">Apertura de archivos externos</p>
+      </div>
+      <div class="dep-card">
+        <p class="dep-name">intl</p>
+        <span class="dep-license">BSD-3</span>
+        <p class="dep-desc">Formato de fechas en español</p>
+      </div>
+      <div class="dep-card">
+        <p class="dep-name">Flutter SDK</p>
+        <span class="dep-license">BSD-3</span>
+        <p class="dep-desc">Framework de Google para apps móviles</p>
+      </div>
+    </div>
+
+    <h2>Aviso legal</h2>
+    <p>WhatsView es un proyecto independiente y no está afiliado, asociado, autorizado, respaldado ni conectado de ninguna manera con WhatsApp LLC, Meta Platforms Inc., ni ninguna de sus subsidiarias o afiliadas.</p>
+    <p>El nombre "WhatsApp" y los logotipos relacionados son marcas registradas de sus respectivos propietarios. WhatsView simplemente procesa archivos exportados con las herramientas oficiales de WhatsApp.</p>
+
+  </div>
+</div>
+
+<footer>
+  <p>© 2026 WhatsView · <a href="index.html">Inicio</a> · <a href="privacy.html">Privacidad</a> · <a href="mailto:whatsview0@gmail.com">whatsview0@gmail.com</a></p>
+</footer>
+
+</body>
+</html>

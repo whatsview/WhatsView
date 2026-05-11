@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>WhatsView — Visor de chats de WhatsApp</title>
+  <meta name="description" content="Importa y visualiza tus chats exportados de WhatsApp con la interfaz original. Gratis, sin publicidad, sin internet."/>
+  <meta property="og:title" content="WhatsView"/>
+  <meta property="og:description" content="Tus conversaciones, como las recuerdas."/>
+  <meta property="og:type" content="website"/>
+  <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --green: #25D366;
+      --green-dark: #128C7E;
+      --green-light: #dcf8c6;
+      --bg: #0a0f0d;
+      --bg2: #111a15;
+      --bg3: #162019;
+      --text: #e8f0e9;
+      --text-muted: #7a9982;
+      --border: rgba(37,211,102,0.12);
+      --bubble-me: #005c4b;
+      --bubble-them: #1f2c34;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    /* ── NAV ─────────────────────────────────────────────────────── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 2rem;
+      height: 60px;
+      background: rgba(10,15,13,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1.25rem;
+      color: var(--green);
+      text-decoration: none;
+      letter-spacing: -0.02em;
+    }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--text); }
+
+    /* ── HERO ────────────────────────────────────────────────────── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 6rem 2rem 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-glow {
+      position: absolute;
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(37,211,102,0.08) 0%, transparent 70%);
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+
+    /* Chat preview decorativo */
+    .hero-chat {
+      position: absolute;
+      right: -20px; top: 50%;
+      transform: translateY(-50%);
+      width: 240px;
+      opacity: 0.18;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding: 1rem;
+    }
+    .hero-chat-left {
+      align-self: flex-start;
+      background: var(--bubble-them);
+      border-radius: 8px 8px 8px 2px;
+      padding: 8px 12px;
+      font-size: 11px;
+      max-width: 80%;
+      color: #e9edef;
+    }
+    .hero-chat-right {
+      align-self: flex-end;
+      background: var(--bubble-me);
+      border-radius: 8px 8px 2px 8px;
+      padding: 8px 12px;
+      font-size: 11px;
+      max-width: 80%;
+      color: #e9edef;
+    }
+
+    .hero-eyebrow {
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--green);
+      margin-bottom: 1.5rem;
+    }
+
+    .hero h1 {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: clamp(3rem, 8vw, 6rem);
+      line-height: 1;
+      letter-spacing: -0.04em;
+      margin-bottom: 1.5rem;
+    }
+    .hero h1 span { color: var(--green); }
+
+    .hero-sub {
+      font-size: 1.125rem;
+      color: var(--text-muted);
+      max-width: 480px;
+      font-weight: 300;
+      line-height: 1.7;
+      margin-bottom: 3rem;
+    }
+
+    .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; }
+
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: var(--green);
+      color: #0a0f0d;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 500;
+      font-size: 0.9375rem;
+      padding: 0.75rem 1.75rem;
+      border-radius: 100px;
+      text-decoration: none;
+      transition: opacity 0.2s, transform 0.15s;
+      border: none; cursor: pointer;
+    }
+    .btn-primary:hover { opacity: 0.9; transform: translateY(-1px); }
+    .btn-primary:active { transform: translateY(0); }
+
+    .btn-ghost {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: transparent;
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 400;
+      font-size: 0.9375rem;
+      padding: 0.75rem 1.75rem;
+      border-radius: 100px;
+      text-decoration: none;
+      border: 1px solid var(--border);
+      transition: border-color 0.2s, background 0.2s;
+      cursor: pointer;
+    }
+    .btn-ghost:hover { border-color: rgba(37,211,102,0.35); background: rgba(37,211,102,0.04); }
+
+    /* ── FEATURES ────────────────────────────────────────────────── */
+    section { padding: 5rem 2rem; }
+    .section-inner { max-width: 900px; margin: 0 auto; }
+
+    .section-label {
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--green);
+      margin-bottom: 1rem;
+    }
+
+    .section-title {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: clamp(1.75rem, 4vw, 2.5rem);
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+      margin-bottom: 1rem;
+    }
+
+    .section-body {
+      color: var(--text-muted);
+      font-weight: 300;
+      font-size: 1rem;
+      max-width: 560px;
+      margin-bottom: 3rem;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+
+    .feature-card {
+      background: var(--bg2);
+      padding: 1.75rem;
+      transition: background 0.2s;
+    }
+    .feature-card:hover { background: var(--bg3); }
+
+    .feature-icon {
+      width: 40px; height: 40px;
+      background: rgba(37,211,102,0.08);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 1rem;
+      font-size: 1.25rem;
+    }
+
+    .feature-title {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 0.9375rem;
+      margin-bottom: 0.5rem;
+      color: var(--text);
+    }
+
+    .feature-desc {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+      font-weight: 300;
+    }
+
+    /* ── HOWTO ───────────────────────────────────────────────────── */
+    #como-usar { background: var(--bg2); }
+
+    .steps {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      position: relative;
+    }
+    .steps::before {
+      content: '';
+      position: absolute;
+      left: 19px; top: 0; bottom: 0;
+      width: 1px;
+      background: var(--border);
+    }
+
+    .step {
+      display: flex;
+      gap: 1.5rem;
+      padding: 1.5rem 0;
+      position: relative;
+    }
+
+    .step-num {
+      flex-shrink: 0;
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 0.875rem;
+      color: var(--green);
+      z-index: 1;
+    }
+
+    .step-content { padding-top: 8px; }
+    .step-content strong {
+      display: block;
+      font-weight: 500;
+      font-size: 0.9375rem;
+      margin-bottom: 0.25rem;
+      color: var(--text);
+    }
+    .step-content p {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      font-weight: 300;
+    }
+    .step-content code {
+      font-size: 0.8125rem;
+      background: rgba(37,211,102,0.08);
+      color: var(--green);
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-family: monospace;
+    }
+
+    /* ── DOWNLOAD ────────────────────────────────────────────────── */
+    #descargar { text-align: center; }
+
+    .download-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 3rem 2rem;
+      max-width: 480px;
+      margin: 0 auto;
+      position: relative;
+      overflow: hidden;
+    }
+    .download-card::before {
+      content: '';
+      position: absolute;
+      top: -1px; left: 20%; right: 20%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--green), transparent);
+    }
+
+    .download-icon {
+      width: 72px; height: 72px;
+      background: rgba(37,211,102,0.1);
+      border-radius: 18px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 2rem;
+      margin: 0 auto 1.5rem;
+    }
+
+    .download-title {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 1.5rem;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.5rem;
+    }
+
+    .download-meta {
+      font-size: 0.8125rem;
+      color: var(--text-muted);
+      margin-bottom: 2rem;
+    }
+
+    .download-badge {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      background: rgba(37,211,102,0.08);
+      color: var(--green);
+      font-size: 0.75rem;
+      font-weight: 500;
+      padding: 4px 12px;
+      border-radius: 100px;
+      margin-bottom: 1.5rem;
+    }
+
+    .download-note {
+      margin-top: 1rem;
+      font-size: 0.8125rem;
+      color: var(--text-muted);
+      font-style: italic;
+    }
+
+    /* ── FOOTER ──────────────────────────────────────────────────── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .footer-logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--green);
+    }
+    .footer-links {
+      display: flex; gap: 1.5rem;
+      list-style: none;
+    }
+    .footer-links a {
+      font-size: 0.8125rem;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--text); }
+    .footer-copy {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      width: 100%;
+    }
+
+    /* ── DIVIDER ─────────────────────────────────────────────────── */
+    .divider {
+      width: 100%; height: 1px;
+      background: var(--border);
+      border: none;
+    }
+
+    /* ── RESPONSIVE ──────────────────────────────────────────────── */
+    @media (max-width: 640px) {
+      nav { padding: 0 1rem; }
+      .nav-links { gap: 1rem; }
+      .hero-chat { display: none; }
+      section { padding: 3.5rem 1.25rem; }
+      footer { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="index.html">
+    <img src="assets/logo.png" alt="WhatsView" style="height:32px; display:block;"/>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#caracteristicas">Características</a></li>
+    <li><a href="#como-usar">Cómo usar</a></li>
+    <li><a href="#descargar">Descargar</a></li>
+    <li><a href="privacy.html">Privacidad</a></li>
+    <li><a href="license.html">Licencia</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-glow"></div>
+
+  <!-- Burbujas decorativas -->
+  <div class="hero-chat" aria-hidden="true">
+    <div class="hero-chat-left">Hola! llegaste bien?</div>
+    <div class="hero-chat-right">Sí, acabo de llegar ✓✓</div>
+    <div class="hero-chat-left">Qué bueno 🙌</div>
+    <div class="hero-chat-right">Gracias por preguntar!</div>
+    <div class="hero-chat-left">Avísame cuando salgas</div>
+    <div class="hero-chat-right">Va, ahorita te digo ✓✓</div>
+  </div>
+
+  <p class="hero-eyebrow">Para Android · Gratis · Sin publicidad</p>
+  <h1>Tus chats,<br/><span>como los recuerdas.</span></h1>
+  <p class="hero-sub">
+    Importa cualquier chat exportado de WhatsApp y léelo con la interfaz original — burbujas, imágenes, stickers, fechas y todo.
+  </p>
+  <div class="hero-actions">
+    <a href="#descargar" class="btn-primary">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v13M7 11l5 5 5-5"/><path d="M5 21h14"/></svg>
+      Descargar APK
+    </a>
+    <a href="#como-usar" class="btn-ghost">
+      Cómo funciona →
+    </a>
+  </div>
+</section>
+
+<hr class="divider"/>
+
+<!-- CARACTERÍSTICAS -->
+<section id="caracteristicas">
+  <div class="section-inner">
+    <p class="section-label">Características</p>
+    <h2 class="section-title">Todo lo que necesitas<br/>para leer tus chats.</h2>
+    <p class="section-body">Sin cuentas, sin servidores, sin subir nada a internet. Todo se procesa directo en tu teléfono.</p>
+
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">💬</div>
+        <p class="feature-title">Interfaz idéntica a WA</p>
+        <p class="feature-desc">Burbujas verdes y grises, separadores de fecha, hora en cada mensaje. Exactamente como lo conoces.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🖼️</div>
+        <p class="feature-title">Imágenes y stickers</p>
+        <p class="feature-desc">Visualiza las imágenes y stickers incluidos en el ZIP. Toca para verlos a pantalla completa.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔒</div>
+        <p class="feature-title">100% offline</p>
+        <p class="feature-desc">Ningún dato sale de tu teléfono. No hay servidores, no hay cuentas, no hay rastreo.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔍</div>
+        <p class="feature-title">Búsqueda en el chat</p>
+        <p class="feature-desc">Encuentra cualquier mensaje rápidamente con la búsqueda integrada por texto o contacto.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🌙</div>
+        <p class="feature-title">Modo oscuro</p>
+        <p class="feature-desc">Tema oscuro fiel al original de WhatsApp para leer cómodamente de noche.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔗</div>
+        <p class="feature-title">Links clicables</p>
+        <p class="feature-desc">Las URLs en los mensajes se detectan automáticamente y abren en el navegador con un toque.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider"/>
+
+<!-- CÓMO USAR -->
+<section id="como-usar">
+  <div class="section-inner">
+    <p class="section-label">Cómo usar</p>
+    <h2 class="section-title">En tres pasos.</h2>
+    <p class="section-body">Exporta el chat desde WhatsApp, importa el ZIP en WhatsView, y listo.</p>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <strong>Exporta el chat desde WhatsApp</strong>
+          <p>Abre el chat → toca los tres puntos <code>⋮</code> → <code>Más</code> → <code>Exportar chat</code>. Elige <em>"Con archivos multimedia"</em> para incluir imágenes y stickers.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <strong>Instala WhatsView</strong>
+          <p>Descarga el APK, instálalo en tu Android (Android 6.0+). Puede que necesites permitir "instalar de fuentes desconocidas" en los ajustes.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <strong>Importa el .zip</strong>
+          <p>Toca el botón <code>+</code> en la app, selecciona el archivo <code>.zip</code> exportado, y el chat aparece al instante con la interfaz de siempre.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider"/>
+
+<!-- DESCARGA -->
+<section id="descargar">
+  <div class="section-inner">
+    <p class="section-label">Descarga</p>
+    <h2 class="section-title" style="text-align:center;">Gratis. Para siempre.</h2>
+    <p class="section-body" style="margin: 0 auto 3rem; text-align:center;">Sin anuncios, sin compras dentro de la app, sin suscripciones.</p>
+
+    <div class="download-card">
+      <div class="download-icon">📱</div>
+      <div class="download-badge">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm-1 14l-4-4 1.41-1.41L11 13.17l6.59-6.59L19 8l-8 8z"/></svg>
+        Android 6.0 o superior
+      </div>
+      <h3 class="download-title">WhatsView</h3>
+      <p class="download-meta">v1.0.0 · APK · ~15 MB</p>
+      <a href="https://release-assets.githubusercontent.com/github-production-release-asset/1235084666/6de81049-0b22-4353-b814-fd46db9d6da1?sp=r&sv=2018-11-09&sr=b&spr=https&se=2026-05-11T02%3A53%3A50Z&rscd=attachment%3B+filename%3DWhatsView-v1.0.0.apk&rsct=application%2Fvnd.android.package-archive&skoid=96c2d410-5711-43a1-aedd-ab1947aa7ab0&sktid=398a6654-997b-47e9-b12b-9515b896b4de&skt=2026-05-11T01%3A53%3A40Z&ske=2026-05-11T02%3A53%3A50Z&sks=b&skv=2018-11-09&sig=NeISDFXWcHm%2B8nQsOuwp5TubxB8AnOnpBtgyxFFzu8Q%3D&jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmVsZWFzZS1hc3NldHMuZ2l0aHVidXNlcmNvbnRlbnQuY29tIiwia2V5Ijoia2V5MSIsImV4cCI6MTc3ODQ2NjgwMCwibmJmIjoxNzc4NDY1MDAwLCJwYXRoIjoicmVsZWFzZWFzc2V0cHJvZHVjdGlvbi5ibG9iLmNvcmUud2luZG93cy5uZXQifQ.Z88WEXEQ-3dj6lGdt3yrdtWtS99-Yw0Vg0uxMLrr1Sc&response-content-disposition=attachment%3B%20filename%3DWhatsView-v1.0.0.apk&response-content-type=application%2Fvnd.android.package-archive" class="btn-primary" style="width:100%; justify-content:center;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v13M7 11l5 5 5-5"/><path d="M5 21h14"/></svg>
+        Descargar APK
+      </a>
+      <p class="download-note">Al instalar, Android puede pedirte que permitas instalaciones de fuentes desconocidas.</p>
+    </div>
+  </div>
+</section>
+
+<hr class="divider"/>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-logo">WhatsView</span>
+  <ul class="footer-links">
+    <li><a href="privacy.html">Política de privacidad</a></li>
+    <li><a href="license.html">Licencia</a></li>
+    <li><a href="mailto:whatsview0@gmail.com">Contacto</a></li>
+  </ul>
+  <p class="footer-copy">© 2026 WhatsView. Hecho en México 🇲🇽</p>
+</footer>
+
+</body>
+</html>
